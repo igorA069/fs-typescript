@@ -25,4 +25,10 @@ const calculateBmi = (height_cm: number, mass_kg: number): string => {
   return "Obese (Class III)";
 };
 
-console.log(calculateBmi(180, 74));
+if (process.argv.length === 4) {
+  const height_cm = Number(process.argv[2]);
+  const mass_kg = Number(process.argv[3]);
+  console.log(calculateBmi(height_cm, mass_kg));
+} else {
+  console.log("height_cm and mass_kg must be passed as arguments");
+}
