@@ -47,11 +47,15 @@ const calculateExercises = (
 };
 
 if (process.argv.length < 4) {
-  console.log(
+  console.error(
     "You must provide at least 2 command line arguments (targetHoursPerDay and exerciseHours for at least one day)",
   );
 } else {
   const targetHoursPerDay = Number(process.argv[2]);
   const exerciseHours = process.argv.slice(3).map((arg) => Number(arg));
-  console.log(calculateExercises(exerciseHours, targetHoursPerDay));
+  if (isNaN(targetHoursPerDay) || exerciseHours.some((entry) => isNaN(entry))) {
+    console.error("Provided arguments were not numbers");
+  } else {
+    console.log(calculateExercises(exerciseHours, targetHoursPerDay));
+  }
 }
