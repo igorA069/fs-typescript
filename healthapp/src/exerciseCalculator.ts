@@ -46,4 +46,12 @@ const calculateExercises = (
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+if (process.argv.length < 4) {
+  console.log(
+    "You must provide at least 2 command line arguments (targetHoursPerDay and exerciseHours for at least one day)",
+  );
+} else {
+  const targetHoursPerDay = Number(process.argv[2]);
+  const exerciseHours = process.argv.slice(3).map((arg) => Number(arg));
+  console.log(calculateExercises(exerciseHours, targetHoursPerDay));
+}
