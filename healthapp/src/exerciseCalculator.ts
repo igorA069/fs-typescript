@@ -12,12 +12,12 @@ const calculateExercises = (
   exerciseHours: number[],
   targetHoursPerDay: number,
 ): Result => {
-  const exerciseHoursSum: number = exerciseHours.reduce(
+  const exerciseHoursSum = exerciseHours.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
   );
-  const periodLength: number = exerciseHours.length;
-  const averageHoursPerDay: number = exerciseHoursSum / periodLength;
-  const actualToTargetExerciseHoursPerDayRatio: number =
+  const periodLength = exerciseHours.length;
+  const averageHoursPerDay = exerciseHoursSum / periodLength;
+  const actualToTargetExerciseHoursPerDayRatio =
     averageHoursPerDay / targetHoursPerDay;
 
   let rating: number;
