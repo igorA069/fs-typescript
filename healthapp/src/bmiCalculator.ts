@@ -1,4 +1,4 @@
-const calculateBmi = (height_cm: number, mass_kg: number): string => {
+export const calculateBmi = (height_cm: number, mass_kg: number): string => {
   const height_m = height_cm / 100;
   const bmi = mass_kg / (height_m * height_m);
   if (bmi < 16.0) {
@@ -25,14 +25,17 @@ const calculateBmi = (height_cm: number, mass_kg: number): string => {
   return "Obese (Class III)";
 };
 
-if (process.argv.length === 4) {
-  const height_cm = Number(process.argv[2]);
-  const mass_kg = Number(process.argv[3]);
-  if (isNaN(height_cm) || isNaN(mass_kg)) {
-    console.error("Provided arguments were not numbers");
+const isMain = process.argv[1] === import.meta.filename;
+if (isMain) {
+  if (process.argv.length === 4) {
+    const height_cm = Number(process.argv[2]);
+    const mass_kg = Number(process.argv[3]);
+    if (isNaN(height_cm) || isNaN(mass_kg)) {
+      console.error("Provided arguments were not numbers");
+    } else {
+      console.log(calculateBmi(height_cm, mass_kg));
+    }
   } else {
-    console.log(calculateBmi(height_cm, mass_kg));
+    console.error("height_cm and mass_kg must be passed as arguments");
   }
-} else {
-  console.error("height_cm and mass_kg must be passed as arguments");
 }
