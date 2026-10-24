@@ -1,4 +1,4 @@
-interface Result {
+export interface CalculateExerciseResult {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -8,10 +8,10 @@ interface Result {
   average: number;
 }
 
-const calculateExercises = (
+export const calculateExercises = (
   exerciseHours: number[],
   targetHoursPerDay: number,
-): Result => {
+): CalculateExerciseResult => {
   const exerciseHoursSum = exerciseHours.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
   );
@@ -46,16 +46,21 @@ const calculateExercises = (
   };
 };
 
-if (process.argv.length < 4) {
-  console.error(
-    "You must provide at least 2 command line arguments (targetHoursPerDay and exerciseHours for at least one day)",
-  );
-} else {
-  const targetHoursPerDay = Number(process.argv[2]);
-  const exerciseHours = process.argv.slice(3).map((arg) => Number(arg));
-  if (isNaN(targetHoursPerDay) || exerciseHours.some((entry) => isNaN(entry))) {
-    console.error("Provided arguments were not numbers");
+if (process.argv[1] === import.meta.filename) {
+  if (process.argv.length < 4) {
+    console.error(
+      "You must provide at least 2 command line arguments (targetHoursPerDay and exerciseHours for at least one day)",
+    );
   } else {
-    console.log(calculateExercises(exerciseHours, targetHoursPerDay));
+    const targetHoursPerDay = Number(process.argv[2]);
+    const exerciseHours = process.argv.slice(3).map((arg) => Number(arg));
+    if (
+      isNaN(targetHoursPerDay) ||
+      exerciseHours.some((entry) => isNaN(entry))
+    ) {
+      console.error("Provided arguments were not numbers");
+    } else {
+      console.log(calculateExercises(exerciseHours, targetHoursPerDay));
+    }
   }
 }
