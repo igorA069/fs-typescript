@@ -6,7 +6,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest # ERROR: Playwright does not support chromium on ubuntu26.04-x64
+    runs-on: ubuntu-24.04
     
     steps:
     - name: Checkout code
