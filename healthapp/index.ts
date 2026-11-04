@@ -33,7 +33,7 @@ app.get("/bmi", (req, res) => {
   }
 });
 
-const PORT = 3003;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Running on http://localhost:${PORT}`);
 });
