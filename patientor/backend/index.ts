@@ -3,12 +3,12 @@ import express from "express";
 const app = express();
 app.use(express.json());
 
-app.get("/ping", (_req, res: any) => {
+app.get("/api/ping", (_req, res: any) => {
   res.send("pong");
   console.log("Received ping");
 });
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
 });
