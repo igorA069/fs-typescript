@@ -1,18 +1,27 @@
-import { type NewPatient } from "./types.ts";
+import type { NewPatient } from "./types.ts";
+import { Gender } from "./types.ts";
 
 const parseString = (input: unknown): string => {
-  if (!input || (typeof input !== "string" && !(input instanceof String))) {
-    throw new Error(`${input} is not a string`);
+  if (typeof input === "string" || input instanceof String) {
+    return String(input);
   }
-  return input.toString();
+  throw new Error(`${input} is not a string`);
 };
 
 const parseDate = (input: unknown): string => {
-  const parsedInput = parseString(input);
-  if (!Date.parse(parsedInput)) {
-    throw new Error(`${input} is not a date`);
+  const inputAsString = parseString(input);
+  if (!isNaN(Date.parse(inputAsString))) {
+    return inputAsString;
   }
-  return parsedInput;
+  throw new Error(`${input} is not a date`);
+};
+
+const parseGender = (input: unknown): Gender => {
+  const inputAsString = parseString(input);
+  if ((Object.values(Gender) as string[]).includes(inputAsString)) {
+    return inputAsString as Gender;
+  }
+  throw new Error(`${input} is not a Gender`);
 };
 
 export const parseNewPatient = (object: unknown): NewPatient => {
@@ -30,7 +39,7 @@ export const parseNewPatient = (object: unknown): NewPatient => {
       ssn: parseString(object.ssn),
       name: parseString(object.name),
       dateOfBirth: parseDate(object.dateOfBirth),
-      gender: parseString(object.gender),
+      gender: parseGender(object.gender),
       occupation: parseString(object.occupation),
     };
     return newPatient;
