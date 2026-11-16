@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "concurrently \"tsc --watch\" \"node --watch src/index.ts\"",
     "start": "node src/index.ts",
-    "eslint": "eslint .",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
