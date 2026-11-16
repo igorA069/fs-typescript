@@ -1,11 +1,11 @@
 import express from "express";
 import { type Response } from "express";
-
-import patientsService from "../services/patientsService.ts";
+import { ZodError } from "zod";
 
 import type { Patient, NonSensitivePatient, ErrorResponse } from "../types.ts";
+import { NewPatientSchema } from "../types.ts";
 
-import { parseNewPatient } from "../utils.ts";
+import patientsService from "../services/patientsService.ts";
 
 const router = express.Router();
 
@@ -15,10 +15,13 @@ router.get("/", (_req, res: Response<Array<NonSensitivePatient>>) => {
 
 router.post("/", (req, res: Response<Patient | ErrorResponse>) => {
   try {
-    const patient = parseNewPatient(req.body);
-    const result = patientsService.add(patient);
+    const newPatient = NewPatientSchema.parse(req.body);
+    const result = patientsService.add(newPatient);
     res.send(result);
   } catch (e) {
+    if (e instanceof ZodError) {
+      res.status(400).json({ error: e.issues });
+    }
     if (e instanceof Error) {
       res.status(400).json({ error: e.message });
     }
